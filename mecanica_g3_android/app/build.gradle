@@ -1,0 +1,18 @@
+plugins { id 'com.android.application' }
+
+android {
+    namespace 'br.com.mecanicag3.orcamentos'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId 'br.com.mecanicag3.orcamentos'
+        minSdk 23
+        targetSdk 35
+        versionCode 41
+        versionName '4.1'
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.12.1'
+}
