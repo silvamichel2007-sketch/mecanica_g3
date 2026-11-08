@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10192e">
+<title>Mecânica G3</title><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#10192e">
+<style>
+:root{--navy:#17324d;--blue:#176b87;--bg:#f3f6f8;--line:#d7e0e6;--muted:#617381}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:15px system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:#17232d}
+header{max-width:850px;margin:14px auto 0;background:var(--navy);color:white;padding:12px 18px;border-radius:12px}
+.header-layout{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px}
+.header-info{min-width:0}
+header h1{margin:0;font-size:21px}
+header p{margin:3px 0 0;color:#d6e3eb;font-size:12px}
+.pix-header{display:flex;align-items:center;gap:10px;margin:0;color:#fff;font-size:11px;line-height:1.3;max-width:330px}
+.pix-header img{width:94px;height:94px;flex:0 0 94px;background:#fff;padding:5px;border-radius:6px;object-fit:contain}
+.pix-header strong{font-size:13px}
+@media(max-width:560px){header{margin:8px 8px 0;padding:12px}.header-layout{grid-template-columns:1fr;gap:10px}.pix-header{max-width:none;justify-content:flex-start}.pix-header img{width:82px;height:82px;flex-basis:82px}}
+@media print{header{max-width:none;margin:0 0 10px;border-radius:0;padding:10px 13px}.header-layout{grid-template-columns:minmax(0,1fr) auto;gap:12px}.pix-header{max-width:290px;font-size:8pt}.pix-header img{width:76px;height:76px;flex-basis:76px}.pix-header span{font-size:8pt}header p{font-size:8pt;margin:2px 0 0}}
+main{max-width:850px;margin:auto;padding:16px;display:grid;gap:14px}
+.card{background:white;border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:0 2px 8px #17324d0b}
+h2{font-size:17px;margin:0 0 12px;color:var(--navy)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}
+input,textarea,select{width:100%;border:1px solid #cbd6dd;border-radius:9px;padding:11px;font:inherit;background:white;color:#17232d}
+textarea{min-height:85px;resize:vertical}.full{grid-column:1/-1}
+button{border:0;border-radius:9px;padding:11px 14px;font-weight:650;background:var(--navy);color:white;font-size:14px;cursor:pointer}
+button.secondary{background:#e8eff3;color:var(--navy)}button.danger{background:#fff0ef;color:#a52c25}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.item{display:grid;grid-template-columns:1fr 110px 42px;gap:8px;align-items:end;margin:8px 0}
+.total{font-size:25px;font-weight:800;color:#13734e}
+.small{font-size:12px;color:var(--muted);line-height:1.45}
+.photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));gap:9px;margin-top:10px}
+.photo{border:1px solid var(--line);border-radius:9px;padding:6px;font-size:11px;overflow:hidden}
+.photo img{width:100%;height:95px;object-fit:cover;border-radius:6px}
+.saved{display:flex;justify-content:space-between;gap:10px;align-items:center;border-top:1px solid var(--line);padding:10px 0}
+.saved strong{display:block}.hidden{display:none}
+#notice{font-size:12px;color:#13734e;min-height:18px}
+@media(max-width:560px){.grid{grid-template-columns:1fr}.full{grid-column:auto}.item{grid-template-columns:1fr 95px 38px}}
+@media print{
+ @page{size:A4;margin:14mm 13mm}
+ *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ body{background:#fff!important;color:#17232d;font-size:11pt;line-height:1.4}
+ header{display:block!important;background:#17324d!important;color:#fff!important;padding:15px 18px!important;margin:0 0 13px;border-radius:0}
+ header h1{font-size:21pt;letter-spacing:.2px;margin:0 0 3px}
+ header p{color:#e2edf3!important;margin:2px 0;font-size:9pt}
+ .no-print,#savedCard{display:none!important}
+ main{max-width:none;padding:0;margin:0;display:block}
+ .card{background:#fff!important;border:0;border-bottom:1.5px solid #9aaab5!important;border-radius:0!important;box-shadow:none!important;padding:12px 2px 14px!important;margin:0 0 8px!important;break-inside:auto;page-break-inside:auto}
+ .card:last-of-type{border-bottom:0!important}
+ h2{font-size:12pt;color:#17324d!important;margin:0 0 10px!important;padding:0 0 6px!important;border-bottom:2px solid #176b87!important;letter-spacing:.15px}
+ .grid{gap:9px 16px}
+ label{font-size:8pt!important;font-weight:700;color:#526575!important;margin:0 0 3px!important;text-transform:uppercase;letter-spacing:.25px}
+ input,textarea,select{display:block;width:100%;border:0!important;border-bottom:1px solid #d3dce2!important;border-radius:0!important;background:transparent!important;color:#17232d!important;padding:3px 0 5px!important;font:10pt system-ui,-apple-system,Segoe UI,Roboto,sans-serif!important;min-height:20px;appearance:none}
+ textarea{min-height:38px;resize:none;white-space:pre-wrap}
+ .item{grid-template-columns:1fr 115px;gap:12px;margin:7px 0;padding:0 0 6px;border-bottom:1px dotted #c4cfd6;break-inside:avoid}
+ .item .desc,.item .value{font-size:10pt!important}
+ .total{font-size:19pt;font-weight:800;color:#17324d!important;border-top:2px solid #17324d;padding-top:8px;margin-top:7px}
+ .photo-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+ .photo{border:1px solid #cbd6dd!important;border-radius:6px;padding:7px;break-inside:avoid}
+ .photo img{height:115px;object-fit:contain}
+ .photo label{margin-top:5px!important}
+ .small{font-size:8pt;color:#526575!important}
+ .print-only{display:block!important;margin-top:10px;padding-top:7px;border-top:1px solid #cbd6dd;color:#526575!important}
+}
+.print-only{display:none}
+.recommendation-box{border:1px solid #b8cfdf;border-radius:10px;padding:12px;background:#f6fbff}.recommendation-photos{margin-top:12px;padding-top:12px;border-top:1px solid #c8dce8}
+
+/* Visual vibrante Mecânica G3 — somente interface, sem alterar lógica */
+@media screen {
+:root{--navy:#1744b5;--blue:#087ee8;--bg:#eef5ff;--line:#d6e4f7;--muted:#536681}
+body{background:linear-gradient(145deg,#e6f4ff 0%,#f5efff 48%,#e9fff4 100%);color:#172b49}
+header{background:linear-gradient(115deg,#1644b7,#007fdb 55%,#00a7b5);box-shadow:0 10px 28px #124bb331;border:1px solid #ffffff50}
+header h1{font-size:25px;letter-spacing:.3px}header p{color:#e8f5ff}
+.card{background:#ffffffed;border:1px solid #dbe6f8;border-radius:19px;box-shadow:0 8px 22px #2a5bb014;border-top:5px solid #1785f2}
+.card:nth-of-type(2){border-top-color:#8b54e9}.card:nth-of-type(3){border-top-color:#ff971e}
+.card:nth-of-type(4){border-top-color:#8a55ec;background:#fbf9ff}
+.card:nth-of-type(5){border-top-color:#00ad84}.card:nth-of-type(6){border-top-color:#ee4e91}
+.card:nth-of-type(7){border-top-color:#1b86ec}.card:nth-of-type(8){border-top-color:#00b5b0}
+h2{color:#1747b7;font-size:18px;letter-spacing:.1px}
+label{color:#455c7c;font-weight:650}
+input,textarea,select{border:1.5px solid #cbdcf4;background:#fbfdff;border-radius:11px;transition:border-color .2s,box-shadow .2s}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#3689ff;box-shadow:0 0 0 3px #3689ff26;background:#fff}
+button{background:linear-gradient(135deg,#1268ef,#04a5df);border-radius:12px;padding:12px 16px;box-shadow:0 4px 10px #1764ce2a;transition:transform .15s,filter .15s;letter-spacing:.1px}
+button:hover{filter:brightness(1.06);transform:translateY(-1px)}button:active{transform:translateY(1px)}
+button.secondary{background:linear-gradient(135deg,#7550e9,#a05af0);color:white}
+button.danger{background:linear-gradient(135deg,#ef4565,#ff6b67);color:white;box-shadow:none}
+#addItem{background:linear-gradient(135deg,#f58a12,#ffb32d)}
+#save{background:linear-gradient(135deg,#079b66,#22c883)}
+#sharePdf,#shareInvoice{background:linear-gradient(135deg,#1473e8,#18a9e7)}
+#new{background:linear-gradient(135deg,#f48b17,#f9af36)}
+#backup{background:linear-gradient(135deg,#7652dc,#a164ef)}
+#restore{background:linear-gradient(135deg,#067fa9,#09b7b8)}
+.total{color:#078c61;background:#e7fff3;border:1px solid #b9eed7;border-radius:12px;padding:10px 14px;display:inline-block}
+#g3Lucro{color:#067d60}#g3Margem{color:#6b44cf;background:#f1eaff;border-color:#d8c7ff}
+.recommendation-box{background:#f3f0ff;border-color:#d9c7ff;border-radius:13px}
+.photo{background:#fff;border-color:#d7e3f5;border-radius:12px}
+.saved{border-color:#e1e8f7}#notice{font-weight:650;color:#087f5d}
+@media(max-width:560px){header h1{font-size:23px}.card{padding:14px}button{font-size:13px}}
+}
+
+/* Edição Black Neon — visual escuro, preservando impressão e funções */
+@media screen {
+:root{--navy:#10192e;--blue:#00c7ff;--bg:#080d17;--line:#29364e;--muted:#aab9d1}
+html{color-scheme:dark}
+body{background:radial-gradient(ellipse at 12% 0%,#14294a 0%,transparent 40%),radial-gradient(ellipse at 95% 42%,#23163d 0%,transparent 38%),#080d17;color:#eaf2ff;min-height:100vh}
+header{background:linear-gradient(115deg,#101829,#142743 55%,#071b29);border:1px solid #2a4966;box-shadow:0 12px 36px #0009,0 0 28px #00baff18;position:relative;overflow:hidden}
+header:before{content:'';position:absolute;inset:0 0 auto;height:3px;background:linear-gradient(90deg,#00d9ff,#8c5cff,#ff4fa3,#00f0b5)}
+header h1{color:#fff;text-shadow:0 0 22px #00bfff65}header p{color:#c0d3eb}
+.card{background:linear-gradient(155deg,#182338f5,#101a2bf7);border:1px solid #2b3b55;border-top:4px solid #00c9ff;box-shadow:0 10px 28px #0007,0 0 0 1px #ffffff05;color:#e8f0fc}
+.card:nth-of-type(2){border-top-color:#a078ff}.card:nth-of-type(3){border-top-color:#ffad36}
+.card:nth-of-type(4){border-top-color:#aa77ff;background:linear-gradient(155deg,#1c203a,#141b2c)}
+.card:nth-of-type(5){border-top-color:#10dba8}.card:nth-of-type(6){border-top-color:#ff5ba2}
+.card:nth-of-type(7){border-top-color:#31a3ff}.card:nth-of-type(8){border-top-color:#00d9d1}
+h2{color:#eff6ff}label{color:#b8c9e4}.small{color:#a9bbd4}
+input,textarea,select{background:#0c1525;color:#f2f7ff;border:1.5px solid #354760;box-shadow:inset 0 1px 2px #0004}
+input::placeholder,textarea::placeholder{color:#8192ac;opacity:1}
+input:focus,textarea:focus,select:focus{background:#111e32;color:#fff;border-color:#00c9ff;box-shadow:0 0 0 3px #00c9ff25,0 0 16px #00c9ff1b}
+input[type=file]{color:#c7d7ee}input::file-selector-button{background:#243756;color:#fff;border:0;border-radius:8px;padding:7px 10px;margin-right:10px}
+button{color:#fff;box-shadow:0 5px 16px #0006,0 0 12px #04a5df22;border:1px solid #ffffff20}
+button:hover{filter:brightness(1.15);box-shadow:0 7px 20px #0008,0 0 18px #00c9ff35}
+button.secondary{color:#fff}.total{background:#0d302b;color:#4af0ba;border-color:#236857;box-shadow:0 0 18px #0ddaa013}
+#g3Lucro{color:#53f3bb}#g3Margem{background:#251c42;color:#c5a9ff;border-color:#57418b}
+.recommendation-box{background:#211b38;border-color:#594382}.recommendation-photos{border-color:#594382}
+.photo{background:#0d1727;border-color:#334661}.saved{border-color:#30405a}#notice{color:#56f3bd}
+#savedList{color:#b9c9df}.saved strong{color:#f3f7ff}
+#modoVisual{background:#26364e;border:1px solid #50627d;padding:8px 12px;font-size:12px;box-shadow:none}
+body.light-mode{background:linear-gradient(145deg,#e6f4ff,#f5efff 48%,#e9fff4);color:#172b49;color-scheme:light}
+body.light-mode header{background:linear-gradient(115deg,#1644b7,#007fdb 55%,#00a7b5)}
+body.light-mode header p{color:#e8f5ff}
+body.light-mode .card{background:#ffffffed;border-color:#dbe6f8;color:#172b49;box-shadow:0 8px 22px #2a5bb014}
+body.light-mode h2{color:#1747b7}body.light-mode label{color:#455c7c}body.light-mode .small{color:#536681}
+body.light-mode input,body.light-mode textarea,body.light-mode select{background:#fbfdff;color:#172b49;border-color:#cbdcf4}
+body.light-mode input::placeholder,body.light-mode textarea::placeholder{color:#8291a6}
+body.light-mode .recommendation-box{background:#f3f0ff;border-color:#d9c7ff}
+body.light-mode .photo{background:#fff;border-color:#d7e3f5}body.light-mode .saved{border-color:#e1e8f7}
+body.light-mode .total{background:#e7fff3;color:#078c61;border-color:#b9eed7}
+body.light-mode #g3Margem{background:#f1eaff;color:#6b44cf;border-color:#d8c7ff}
+body.light-mode #savedList,body.light-mode .saved strong{color:#172b49}
+body.light-mode #modoVisual{background:#fff;color:#1744b5;border-color:#dbe6f8}
+@media(max-width:560px){header{margin:8px 8px 0}.card{padding:14px}}
+}
+</style><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script></head>
+<body>
+<header><div class="header-layout"><div class="header-info"><h1>Mecânica G3</h1><button type="button" id="modoVisual" class="no-print" aria-label="Alternar modo claro e escuro">☀ Modo claro</button><p>Rua Luiz Ramos Palma, 21 · Cotia – SP</p><p>CNPJ: 32.334.677/0001-52</p><p>Telefone / WhatsApp: (11) 96905-8242</p><p>PIX (celular): 11969058242</p><p>Orçamento · Diagnóstico técnico · Registro de imagens</p></div><div class="pix-header"><img alt="QR Code PIX da Mecânica G3" src="data:image/png;base64,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"><span><strong>Pague por PIX</strong><br>Recebedor: Michel da Silva Santos<br>Leia o QR Code com o aplicativo do seu banco.<br>Chave PIX (celular): (11) 96905-8242</span></div></div></header>
+<main>
+<section class="card no-print" id="g3CloudPanel"><h2>Sincronização dos três celulares</h2><p class="small" id="g3CloudStatus">Aguardando configuração do Firebase.</p><div class="grid"><div><label>E-mail da oficina</label><input id="g3Email" type="email" autocomplete="username" placeholder="email@exemplo.com"></div><div><label>Senha</label><input id="g3Password" type="password" autocomplete="current-password" placeholder="Senha da conta"></div></div><div class="actions"><button id="g3Login" type="button">Entrar e sincronizar</button><button id="g3Logout" type="button" class="secondary">Sair</button><button id="g3ImportLocal" type="button" class="secondary">Enviar orçamentos antigos deste aparelho</button></div><p class="small">Os dados compartilhados ficam na nuvem. Use a mesma conta nos três aparelhos. A importação de registros antigos é opcional e deve ser feita uma vez por aparelho, depois de conferir os dados.</p></section>
+<section class="card">
+<h2>1. Cliente e veículo</h2>
+<div class="grid">
+<div><label>Cliente</label><input id="cliente" placeholder="Nome do cliente"></div>
+<div><label>Telefone / WhatsApp</label><input id="telefone" placeholder="(00) 00000-0000"></div>
+<div><label>Veículo / versão</label><input id="veiculo" placeholder="Ex.: Audi A4 2.0 TFSI"></div>
+<div><label>Ano</label><input id="ano" placeholder="2013"></div>
+<div><label>Placa</label><input id="placa" placeholder="ABC1D23"></div>
+<div><label>Quilometragem</label><input id="km" placeholder="Ex.: 125.000 km"></div>
+</div></section>
+<section class="card">
+<h2>2. Diagnóstico e observações</h2>
+<div class="grid">
+<div class="full"><label>Defeito relatado pelo cliente</label><textarea id="relato" placeholder="Descreva o sintoma informado..."></textarea></div>
+<div class="full"><label>Diagnóstico / testes realizados (ex.: osciloscópio)</label><textarea id="diagnostico" placeholder="Descreva medições, sinais encontrados e conclusão técnica..."></textarea></div>
+<div class="full recommendation-box"><label>Recomendação / serviço proposto</label><textarea id="recomendacao" placeholder="Descreva o reparo recomendado..."></textarea><div class="recommendation-photos"><label>Fotos do problema: peças danificadas e capturas do osciloscópio</label><input id="fotosDefeito" type="file" accept="image/*" multiple><div id="defectGrid" class="photo-grid"></div></div></div>
+</div></section>
+<section class="card">
+<h2>3. Peças e mão de obra</h2>
+<div id="items"></div>
+<div class="actions no-print"><button class="secondary" id="addItem">+ Adicionar item</button></div>
+<div class="grid" style="margin-top:14px">
+<div><label>Desconto (R$)</label><input id="desconto" type="number" min="0" step=".01" value="0"></div>
+<div><label>Validade do orçamento</label><input id="validade" placeholder="Ex.: 7 dias"></div>
+</div>
+<p>Total do orçamento</p><div class="total" id="total">R$ 0,00</div>
+</section>
+<section class="card no-print" id="centroCustosG3">
+<h2>Centro de Custos (uso interno da oficina)</h2>
+<p class="small">Informações internas. Não entram no orçamento nem na fatura PDF do cliente.</p>
+<div id="g3CustosItens"></div>
+<div class="grid">
+<div><label for="g3CustoPecas">Outros custos de peças (R$)</label><input id="g3CustoPecas" type="number" min="0" step="0.01" value="0"></div>
+<div><label for="g3CustoMaoObra">Custo da mão de obra (R$)</label><input id="g3CustoMaoObra" type="number" min="0" step="0.01" value="0"></div>
+<div><label for="g3OutrasDespesas">Outras despesas (R$)</label><input id="g3OutrasDespesas" type="number" min="0" step="0.01" value="0"></div>
+<div><label>Custo total</label><div class="total" id="g3CustoTotal">R$ 0,00</div></div>
+<div><label>Lucro bruto estimado</label><div class="total" id="g3Lucro">R$ 0,00</div></div>
+<div><label>Margem sobre a venda</label><div class="total" id="g3Margem">0,0%</div></div>
+<div class="full"><label for="g3NotasInternas">Anotações internas</label><textarea id="g3NotasInternas" placeholder="Informações que não devem aparecer para o cliente"></textarea></div>
+</div></section>
+<section class="card">
+<h2>4. Fotos após o reparo: peças novas e osciloscópio com defeito resolvido</h2>
+<label>Selecionar fotos já salvas na galeria ou nos arquivos do celular</label>
+<input id="fotos" type="file" accept="image/*" multiple>
+<div class="small">Selecione imagens já existentes na galeria ou nos arquivos do celular. As imagens ficam anexadas ao orçamento salvo neste navegador. Identifique cada imagem com uma legenda.</div>
+<div id="photoGrid" class="photo-grid"></div>
+</section>
+<section class="card">
+<h2>5. Condições e situação</h2>
+<div class="grid">
+<div><label>Situação</label><select id="status"><option>Pendente</option><option>Aprovado</option><option>Recusado</option><option>Em execução</option><option>Concluído</option></select></div>
+<div><label>Garantia / condições</label><input id="garantia" placeholder="Ex.: conforme serviço e peça"></div>
+</div>
+</section>
+<section class="card no-print">
+<h2>6. Salvar e gerar documento</h2>
+<div class="actions">
+<button id="save">Salvar orçamento no celular</button>
+<button id="sharePdf" class="secondary">Compartilhar Orçamento</button><button id="shareInvoice" class="secondary">Compartilhar Fatura</button>
+<button id="new" class="secondary">Novo orçamento</button>
+<button id="backup" class="secondary">Fazer backup</button>
+<button id="restore" class="secondary">Restaurar backup</button>
+<input id="backupFile" type="file" accept=".json,application/json" class="hidden" aria-label="Selecionar arquivo de backup">
+</div><p id="notice"></p>
+<p class="small">O backup inclui todos os orçamentos salvos, com dados, valores e fotos anexadas. Guarde o arquivo JSON fora do celular, por exemplo no Google Drive ou computador. Para recuperar, use “Restaurar backup”. A restauração acrescenta os registros ao histórico e atualiza os que tiverem o mesmo identificador, sem apagar os demais.</p>
+<p class="small">O botão “Gerar PDF” cria um arquivo PDF para baixar. Se o aplicativo Android bloquear o download, abra a versão web no Chrome.</p>
+</section>
+<section class="card no-print" id="savedCard">
+<h2>7. Pesquisar orçamento pela placa</h2>
+<div class="grid">
+<div class="full"><label for="searchPlate">Digite a placa do veículo</label><input id="searchPlate" autocomplete="off" placeholder="Ex.: ABC1D23"></div>
+</div>
+<p class="small" id="searchCount">Digite uma placa para localizar os orçamentos correspondentes.</p>
+<div id="savedList" class="small">Nenhum orçamento salvo ainda.</div>
+</section>
+<div class="print-only small">Documento gerado pelo aplicativo Orçamento Oficina.</div>
+</main>
+<script>
+(function(){const b=document.getElementById('modoVisual');b.addEventListener('click',()=>{document.body.classList.toggle('light-mode');b.textContent=document.body.classList.contains('light-mode')?'☾ Modo black':'☀ Modo claro';});})();
+const $=id=>document.getElementById(id);
+let photos=[], defectPhotos=[], currentId=null, records=[];
+const money=n=>(Number(n)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+function addItem(desc='',val=''){
+ const row=document.createElement('div');row.className='item';
+ row.innerHTML='<div><label>Descrição</label><input class="desc" placeholder="Peça, serviço ou mão de obra"></div><div><label>Valor (R$)</label><input class="value" type="number" min="0" step=".01"></div><button type="button" class="danger no-print" aria-label="Remover">×</button>';
+ row.querySelector('.desc').value=desc;row.querySelector('.value').value=val;
+ row.querySelectorAll('input').forEach(i=>i.addEventListener('input',calc));
+ row.querySelector('button').onclick=()=>{row.remove();calc()};
+ $('items').appendChild(row);calc();
+}
+function calc(){let sum=[...document.querySelectorAll('.value')].reduce((a,e)=>a+(Number(e.value)||0),0);let total=Math.max(0,sum-(Number($('desconto').value)||0));$('total').textContent=money(total);return total}
+$('addItem').onclick=()=>addItem();
+$('desconto').oninput=calc;
+async function addPhotos(e,group){for(const file of e.target.files){if(!file.type.startsWith('image/'))continue;const data=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)});group.push({name:file.name,caption:file.name,data});}renderPhotos();e.target.value=''}
+$('fotos').onchange=e=>addPhotos(e,photos);
+$('fotosDefeito').onchange=e=>addPhotos(e,defectPhotos);
+function renderPhotoGroup(gridId,group){const g=$(gridId);g.innerHTML='';group.forEach((ph,i)=>{const d=document.createElement('div');d.className='photo';d.innerHTML=`<img src="${ph.data}" alt=""><label>Legenda</label><input value="${escapeHtml(ph.caption)}" data-i="${i}"><button class="danger no-print" data-del="${i}" style="margin-top:5px">Remover</button>`;g.appendChild(d)});g.querySelectorAll('input').forEach(e=>e.oninput=()=>group[Number(e.dataset.i)].caption=e.value);g.querySelectorAll('button').forEach(e=>e.onclick=()=>{group.splice(Number(e.dataset.del),1);renderPhotos()})}
+function renderPhotos(){renderPhotoGroup('photoGrid',photos);renderPhotoGroup('defectGrid',defectPhotos)}
+function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const fields=['cliente','telefone','veiculo','ano','placa','km','relato','diagnostico','recomendacao','desconto','validade','status','garantia'];
+function collect(){return {id:currentId||String(Date.now()),date:new Date().toLocaleString('pt-BR'),fields:Object.fromEntries(fields.map(f=>[f,$(f).value])),items:[...document.querySelectorAll('.item')].map(r=>({desc:r.querySelector('.desc').value,value:r.querySelector('.value').value})),photos,defectPhotos,total:calc()}}
+function apply(r){currentId=r.id;fields.forEach(f=>$(f).value=r.fields[f]||'');$('items').innerHTML='';(r.items||[]).forEach(i=>addItem(i.desc,i.value));photos=r.photos||[];defectPhotos=r.defectPhotos||[];renderPhotos();calc();$('notice').textContent='Orçamento carregado.'}
+function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('OrcamentoOficinaDB',1);req.onupgradeneeded=()=>req.result.createObjectStore('orcamentos',{keyPath:'id'});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
+async function saveRecord(){const r=collect();const db=await openDB();await new Promise((res,rej)=>{const tx=db.transaction('orcamentos','readwrite');tx.objectStore('orcamentos').put(r);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});currentId=r.id;$('notice').textContent='Orçamento salvo neste aparelho.';await loadRecords()}
+function normalizePlate(value){return String(value||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
+function renderRecords(){
+ const list=$('savedList');list.innerHTML='';
+ const query=normalizePlate($('searchPlate').value);
+ const matches=records.filter(r=>!query||normalizePlate(r.fields?.placa).includes(query));
+ $('searchCount').textContent=query?`${matches.length} orçamento(s) encontrado(s) para a pesquisa.`:`${records.length} orçamento(s) salvo(s). Digite a placa para filtrar.`;
+ if(!matches.length){list.textContent=query?'Nenhum orçamento encontrado para essa placa.':'Nenhum orçamento salvo ainda.';return}
+ matches.forEach(r=>{const d=document.createElement('div');d.className='saved';const title=document.createElement('div');title.innerHTML=`<strong>${escapeHtml(r.fields.cliente||'Sem nome')} · ${escapeHtml(r.fields.veiculo||'Sem veículo')}</strong>${escapeHtml(r.fields.placa||'Sem placa')} · ${money(r.total)} · ${escapeHtml(r.fields.status||'')}`;const b=document.createElement('button');b.textContent='Abrir';b.onclick=()=>{apply(r);window.scrollTo({top:0,behavior:'smooth'})};const del=document.createElement('button');del.textContent='Excluir';del.className='danger';del.onclick=()=>window.g3DeleteRecord?.(r);d.append(title,b,del);list.append(d)})
+}
+$('searchPlate').addEventListener('input',renderRecords);
+async function loadRecords(){try{const db=await openDB();records=await new Promise((res,rej)=>{const q=db.transaction('orcamentos').objectStore('orcamentos').getAll();q.onsuccess=()=>res(q.result.sort((a,b)=>b.id.localeCompare(a.id)));q.onerror=()=>rej(q.error)});renderRecords()}catch(e){$('savedList').textContent='Não foi possível acessar o armazenamento deste navegador.'}}
+$('save').onclick=()=>saveRecord().catch(e=>$('notice').textContent='Erro ao salvar: '+e.message);
+async function backupRecords(){
+ const db=await openDB();
+ const all=await new Promise((res,rej)=>{const q=db.transaction('orcamentos').objectStore('orcamentos').getAll();q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)});
+ db.close();
+ const payload={app:'Mecanica G3 - Orcamentos',formatVersion:1,exportedAt:new Date().toISOString(),records:all};
+ const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});
+ const url=URL.createObjectURL(blob);const a=document.createElement('a');
+ a.href=url;a.download='backup_mecanica_g3_'+new Date().toISOString().slice(0,10)+'.json';
+ document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+ $('notice').textContent=`Backup gerado: ${all.length} orçamento(s), incluindo fotos anexadas.`;
+}
+async function restoreRecords(file){
+ const raw=await file.text();const data=JSON.parse(raw);
+ if(data.app!=='Mecanica G3 - Orcamentos'||data.formatVersion!==1||!Array.isArray(data.records))throw new Error('Este arquivo não é um backup válido da Mecânica G3.');
+ if(data.records.some(r=>!r||!r.id||typeof r.fields!=='object'))throw new Error('O backup contém um orçamento inválido.');
+ if(!confirm(`Foram encontrados ${data.records.length} orçamento(s). A restauração vai mesclar esses registros com o histórico atual, sem apagar os outros. Continuar?`))return;
+ const db=await openDB();
+ await new Promise((res,rej)=>{const tx=db.transaction('orcamentos','readwrite');const store=tx.objectStore('orcamentos');for(const r of data.records)store.put(r);tx.oncomplete=res;tx.onerror=()=>rej(tx.error);tx.onabort=()=>rej(tx.error||new Error('Restauração cancelada.'))});
+ db.close();await loadRecords();$('notice').textContent=`Restauração concluída: ${data.records.length} orçamento(s) importado(s).`;
+}
+$('backup').onclick=()=>backupRecords().catch(e=>$('notice').textContent='Erro ao fazer backup: '+e.message);
+$('restore').onclick=()=>$('backupFile').click();
+$('backupFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;try{await restoreRecords(file)}catch(err){$('notice').textContent='Erro ao restaurar: '+err.message}finally{e.target.value=''}};
+async function imagemParaJpeg(src){
+ return await new Promise((resolve,reject)=>{
+  const im=new Image();
+  im.onload=()=>{
+   try{
+    const canvas=document.createElement('canvas');
+    const scale=Math.min(1,1600/Math.max(im.naturalWidth,im.naturalHeight));
+    canvas.width=Math.max(1,Math.round(im.naturalWidth*scale));
+    canvas.height=Math.max(1,Math.round(im.naturalHeight*scale));
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(im,0,0,canvas.width,canvas.height);
+    resolve({data:canvas.toDataURL('image/jpeg',0.88),width:canvas.width,height:canvas.height});
+   }catch(e){reject(e)}
+  };
+  im.onerror=()=>reject(new Error('Não foi possível carregar a imagem.'));
+  im.src=src;
+ });
+}
+async function gerarPDF(compartilhar=false,tipo="orcamento"){
+ const notice=$('notice');
+ if(!window.jspdf?.jsPDF){notice.textContent='Biblioteca PDF indisponível. Conecte à internet e tente novamente.';return}
+ try{
+  calc();
+  const r=collect(),f=r.fields,doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
+  const W=210,M=15,maxW=W-2*M;let y=44;
+  const ink=[232,241,255],muted=[170,190,216],cyan=[0,207,255],purple=[157,112,255],green=[42,234,169];
+  const rgb=c=>doc.setTextColor(...c);
+  const pageBase=()=>{
+   doc.setFillColor(11,17,31);doc.rect(0,0,210,297,'F');
+   doc.setFillColor(17,27,47);doc.rect(0,0,210,40,'F');
+   doc.setFillColor(...cyan);doc.rect(0,39,112,1.1,'F');
+   doc.setFillColor(...purple);doc.rect(112,39,98,1.1,'F');
+   doc.setDrawColor(48,67,95);doc.line(15,287,195,287);
+   rgb(muted);doc.setFont('helvetica','normal');doc.setFontSize(7);
+   doc.text('MECÂNICA G3  |  DOCUMENTO DIGITAL',15,292);
+   doc.text('Página '+doc.internal.getNumberOfPages(),195,292,{align:'right'});
+  };
+  pageBase();
+  // Nas páginas seguintes, usar apenas uma faixa compacta de identificação.
+  const next=(h=7)=>{if(y+h>281){doc.addPage();pageBase();
+   rgb(cyan);doc.setFont('helvetica','bold');doc.setFontSize(12);
+   doc.text('MECÂNICA G3',M,13);
+   rgb(muted);doc.setFontSize(8);doc.text(tipo==='fatura'?'FATURA':'ORÇAMENTO',W-M,13,{align:'right'});
+   y=21;rgb(ink);
+  }};
+  // Campos compactos: título e informação na mesma caixa, evitando blocos altos.
+  const line=(label,value)=>{
+   if(value===undefined||value===null||value==='')return;
+   doc.setFont('helvetica','normal');doc.setFontSize(9);
+   const lines=doc.splitTextToSize(String(value),maxW-8);
+   const h=8+Math.max(1,lines.length)*4.3;
+   next(h+1);
+   doc.setFillColor(19,30,51);doc.roundedRect(M,y,maxW,h,2,2,'F');
+   rgb(cyan);doc.setFont('helvetica','bold');doc.setFontSize(8);
+   doc.text(label.toUpperCase(),M+3,y+4);
+   rgb(ink);doc.setFont('helvetica','normal');doc.setFontSize(9);
+   lines.forEach((t,i)=>doc.text(t,M+3,y+9+i*4.3));
+   y+=h+1.2;
+  };
+  const section=t=>{
+   next(16);y+=2;
+   doc.setFillColor(25,39,66);doc.roundedRect(M,y,maxW,10,2,2,'F');
+   doc.setFillColor(...purple);doc.rect(M,y,2,10,'F');
+   rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(10);
+   doc.text(t,M+5,y+6.7);y+=13;
+  };
+  // Cabeçalho comum aos dois documentos. A conversão evita falhas com PNG no jsPDF.
+  doc.setFillColor(17,27,47);doc.rect(0,0,W,39,'F');
+  rgb(cyan);doc.setFont('helvetica','bold');doc.setFontSize(17);
+  doc.text('MECÂNICA G3',M,10);
+  rgb(ink);doc.setFont('helvetica','normal');doc.setFontSize(7.4);
+  doc.text('Rua Luiz Ramos Palma, 21 - Cotia - SP',M,15);
+  doc.text('CNPJ: 32.334.677/0001-52',M,19);
+  doc.text('Telefone / WhatsApp: (11) 96905-8242',M,23);
+  doc.text('PIX (celular): 11969058242',M,27);
+  rgb(green);doc.setFont('helvetica','bold');doc.setFontSize(8.2);
+  doc.text(tipo==='fatura'?'FATURA':'ORÇAMENTO',M,32);
+  rgb(muted);doc.setFont('helvetica','normal');doc.setFontSize(6.7);
+  doc.text('Diagnóstico técnico - Registro de imagens',M,36);
+  const qrSrc=document.querySelector('.pix-header img')?.src;
+  if(!qrSrc)throw new Error('QR Code PIX não encontrado no aplicativo.');
+  const qr=await imagemParaJpeg(qrSrc);
+  doc.setFillColor(255,255,255);doc.roundedRect(122,5,29,29,2,2,'F');
+  doc.addImage(qr.data,'JPEG',124,7,25,25);
+  doc.setFont('helvetica','bold');doc.setFontSize(8.1);doc.setTextColor(255,255,255);
+  doc.text('PAGUE POR PIX',155,9);
+  doc.setFont('helvetica','normal');doc.setFontSize(6.5);
+  doc.text('Recebedor:',155,14);
+  doc.text('Michel da Silva Santos',155,18);
+  doc.text('Leia o QR Code com o',155,25);
+  doc.text('aplicativo do seu banco.',155,29);
+  doc.text('Chave PIX (celular):',155,34);
+  doc.text('(11) 96905-8242',155,37);
+  rgb(ink);
+  // Cada conjunto de fotos mantém o título junto ao primeiro quadro,
+  // inclusive quando é necessário iniciar uma nova página.
+  const imageGroup=async(title,arr)=>{
+   if(!arr?.length)return;
+   const prepared=[];
+   for(let i=0;i<arr.length;i++){
+    const ph=arr[i];
+    try{
+     const im=await imagemParaJpeg(ph.data);
+     const scale=Math.min(82/im.width,48/im.height);
+     prepared.push({ph,im,w:im.width*scale,h:im.height*scale});
+    }catch(e){throw new Error('Falha na foto '+(ph.name||i+1)+': '+e.message)}
+   }
+   // Quadros menores e adaptáveis à página; o título fica sempre junto às fotos.
+   const boxH=51, rowGap=3, photoH=35;
+   next(16+boxH);
+   section(title);
+   for(let i=0;i<prepared.length;i+=2){
+    if(i>0)next(boxH+rowGap);
+    const top=y;
+    prepared.slice(i,i+2).forEach((v,j)=>{
+     const x=M+j*92;
+     doc.setFillColor(19,30,51);doc.setDrawColor(...cyan);
+     doc.setLineWidth(.3);doc.roundedRect(x,top,88,boxH,2,2,'FD');
+     doc.setFillColor(255,255,255);doc.roundedRect(x+3,top+3,82,photoH,1,1,'F');
+     const scale=Math.min(82/v.im.width,photoH/v.im.height);
+     const iw=v.im.width*scale,ih=v.im.height*scale;
+     doc.addImage(v.im.data,'JPEG',x+(88-iw)/2,top+3+(photoH-ih)/2,iw,ih);
+     doc.setDrawColor(60,85,122);doc.line(x+3,top+40,x+85,top+40);
+     rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(7.5);
+     const caption=doc.splitTextToSize(v.ph.caption||v.ph.name||('Foto '+(i+j+1)),80).slice(0,2);
+     caption.forEach((t,k)=>doc.text(t,x+4,top+44+k*3.5));
+    });
+    y=top+boxH+rowGap;
+   }
+  };
+  line('Data',r.date);section('Cliente e veículo');
+  for(const [k,l] of [['cliente','Cliente'],['telefone','Telefone'],['veiculo','Veículo'],['ano','Ano'],['placa','Placa'],['km','Quilometragem']])line(l,f[k]);
+  section('Diagnóstico e observações');
+  for(const [k,l] of [['relato','Defeito relatado pelo cliente'],['diagnostico','Diagnóstico / testes realizados (ex.: osciloscópio)'],['recomendacao','Recomendação / serviço proposto']])line(l,f[k]);
+  // Fotos do defeito imediatamente após a recomendação, antes das peças.
+  await imageGroup('FOTOS ANTES DO SERVIÇO',r.defectPhotos);
+  section('Peças e mão de obra');
+  for(const it of r.items){
+   next(7);const desc=doc.splitTextToSize(it.desc||'Item',maxW-43);
+   rgb(ink);doc.setFont('helvetica','normal');doc.setFontSize(10);
+   for(let i=0;i<desc.length;i++){
+    next(5);doc.text(desc[i],M,y);
+    if(i===0){rgb(green);doc.text('R$ '+(Number(it.value)||0).toFixed(2).replace('.',','),W-M,y,{align:'right'});rgb(ink)}
+    y+=5;
+   }y+=1;
+  }
+  line('Desconto (R$)',f.desconto);next(19);
+  doc.setFillColor(17,56,54);doc.roundedRect(M,y-6,maxW,17,3,3,'F');
+  rgb(green);doc.setFont('helvetica','bold');doc.setFontSize(15);
+  doc.text('TOTAL: '+money(r.total).replace(/\u00a0/g,' '),M+5,y+5);y+=19;
+  await imageGroup('FOTOS APÓS O SERVIÇO EXECUTADO',r.photos);
+  section('Condições');
+  for(const [k,l] of [['validade','Validade'],['status','Situação'],['garantia','Garantia']])line(l,f[k]);
+  const filename=(tipo==='fatura'?'fatura_g3_':'orcamento_g3_')+(f.placa||'sem_placa').replace(/[^a-z0-9]/gi,'_')+'.pdf';
+  const blob=doc.output('blob');
+  if(compartilhar){
+   const file=new File([blob],filename,{type:'application/pdf'});
+   if(navigator.canShare?.({files:[file]})&&navigator.share){
+    try{await navigator.share({files:[file],title:(tipo==='fatura'?'Fatura':'Orçamento')+' Mecânica G3'});notice.textContent='Compartilhamento finalizado.'}
+    catch(e){notice.textContent=e.name==='AbortError'?'Compartilhamento cancelado.':'Erro ao compartilhar: '+e.message}
+   }else{notice.textContent='Compartilhamento de arquivos não disponível. Use Gerar PDF.'}
+  }else{
+   const url=URL.createObjectURL(blob),a=document.createElement('a');
+   a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();
+   setTimeout(()=>URL.revokeObjectURL(url),60000);
+   notice.textContent='PDF gerado. Verifique Downloads.';
+  }
+ }catch(e){console.error(e);notice.textContent='Erro ao gerar PDF: '+e.message}
+}
+
+$('sharePdf').onclick=()=>gerarPDF(true);
+
+$('shareInvoice').onclick=()=>gerarPDF(true,'fatura');
+$('new').onclick=()=>{if(!confirm('Começar um orçamento novo? Salve antes se precisar manter o atual.'))return;fields.forEach(f=>$(f).value=f==='desconto'?'0':f==='status'?'Pendente':'');$('items').innerHTML='';photos=[];defectPhotos=[];renderPhotos();currentId=null;addItem();$('notice').textContent='Novo orçamento.'};
+addItem();loadRecords();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn))}
+</script>
+<script>
+/* Módulo isolado de custos: não altera os eventos dos botões nem a geração de PDFs. */
+(function(){
+ const ids=['g3CustoPecas','g3CustoMaoObra','g3OutrasDespesas','g3NotasInternas'];
+ const el=id=>document.getElementById(id);
+ const number=id=>Math.max(0,Number(el(id).value)||0);
+ const rows=el('g3CustosItens');
+ let custosPorItem=[];
+ const sync=()=>{
+   const itens=[...document.querySelectorAll('#items .item')];
+   const previous=new Map([...rows.querySelectorAll('[data-key]')].map(n=>[n.dataset.key,n.querySelector('input').value]));
+   rows.replaceChildren();
+   itens.forEach((item,i)=>{
+     if(!item.dataset.costKey)item.dataset.costKey='g3-'+Date.now()+'-'+i+'-'+Math.random().toString(36).slice(2);
+     const key=item.dataset.costKey;
+     const div=document.createElement('div');div.dataset.key=key;div.className='grid';div.style.marginBottom='8px';
+     const name=document.createElement('div');const label=document.createElement('label');label.textContent='Item do orçamento';const title=document.createElement('div');title.textContent=(item.querySelector('.desc')?.value||'Item sem descrição')+' | Venda: '+money(item.querySelector('.value')?.value);name.append(label,title);
+     const cost=document.createElement('div');const lab=document.createElement('label');lab.textContent='Quanto pagou / custo (R$)';const inp=document.createElement('input');inp.type='number';inp.min='0';inp.step='.01';inp.value=previous.get(key)??custosPorItem[i]??'0';inp.addEventListener('input',refresh);cost.append(lab,inp);div.append(name,cost);rows.append(div);
+   });
+   custosPorItem=[];
+ };
+ const refresh=()=>{
+   const custo=[...rows.querySelectorAll('input')].reduce((a,x)=>a+(Number(x.value)||0),0)+number('g3CustoPecas')+number('g3CustoMaoObra')+number('g3OutrasDespesas');
+   const venda=calc();const lucro=venda-custo;
+   el('g3CustoTotal').textContent=money(custo);
+   el('g3Lucro').textContent=money(lucro);
+   el('g3Margem').textContent=venda>0?(lucro/venda*100).toLocaleString('pt-BR',{maximumFractionDigits:1,minimumFractionDigits:1})+'%':'0,0%';
+ };
+ const clear=()=>{ids.forEach(id=>el(id).value=id==='g3NotasInternas'?'':'0');custosPorItem=[];sync();refresh()};
+ ids.forEach(id=>el(id).addEventListener('input',refresh));
+ el('items').addEventListener('input',()=>{sync();refresh()});
+ el('items').addEventListener('click',()=>setTimeout(()=>{sync();refresh()},0));
+ el('addItem').addEventListener('click',()=>setTimeout(()=>{sync();refresh()},0));
+ el('desconto').addEventListener('input',refresh);
+ const oldCollect=collect;
+ collect=function(){const record=oldCollect();record.centroCustos={itens:[...rows.querySelectorAll('input')].map(x=>x.value),pecas:el('g3CustoPecas').value,maoObra:el('g3CustoMaoObra').value,outras:el('g3OutrasDespesas').value,notas:el('g3NotasInternas').value};return record};
+ const oldApply=apply;
+ apply=function(record){oldApply(record);const c=record.centroCustos||{};custosPorItem=c.itens||[];rows.replaceChildren();sync();el('g3CustoPecas').value=c.pecas??'0';el('g3CustoMaoObra').value=c.maoObra??'0';el('g3OutrasDespesas').value=c.outras??'0';el('g3NotasInternas').value=c.notas??'';refresh()};
+ const oldNew=el('new').onclick;
+ el('new').onclick=function(event){const oldId=currentId;oldNew.call(this,event);if(currentId===null&&oldId!==null)clear();else if(currentId===null&&el('cliente').value==='')clear()};
+ sync();refresh();
+})();
+</script>
+<script>
+/* MECÂNICA G3 - sincronização Firebase Realtime Database.
+   Preencha somente os dados públicos do projeto Firebase (não coloque senhas aqui).
+   A segurança real é feita nas regras do banco e na autenticação. */
+const G3_FIREBASE_CONFIG = {
+  apiKey: "AIzaSyBvR-RCpRIIVl5-81yTpvlQC_24Dwg_sUU",
+  authDomain: "orcamento-f27b1.firebaseapp.com",
+  databaseURL: "https://orcamento-f27b1-default-rtdb.firebaseio.com",
+  projectId: "orcamento-f27b1",
+  storageBucket: "orcamento-f27b1.firebasestorage.app",
+  messagingSenderId: "931155794044",
+  appId: "1:931155794044:web:7d535165237e5e531a11f9"
+};
+(function(){
+ const status=document.getElementById('g3CloudStatus');
+ const configured=Object.values(G3_FIREBASE_CONFIG).every(x=>x&&!x.startsWith('COLE_'));
+ let auth=null, db=null, unsubscribe=null, user=null;
+ const inform=msg=>{status.textContent=msg;document.getElementById('notice').textContent=msg};
+ const requireLogin=()=>{if(!user)throw new Error('Entre com o e-mail e a senha para acessar os dados compartilhados.')};
+ // Impede salvar registros locais inadvertidamente na versão compartilhada.
+ saveRecord=async function(){
+   requireLogin();
+   const r=collect();
+   const encoded=JSON.stringify(r);
+   if(new Blob([encoded]).size>8*1024*1024)throw new Error('Orçamento com fotos muito grandes (limite de 8 MB). Reduza as fotos antes de salvar.');
+   await db.ref('oficinas/'+user.uid+'/orcamentos/'+r.id).set(r);
+   currentId=r.id;inform('Orçamento sincronizado com os três celulares.');
+ };
+ loadRecords=async function(){if(!user){records=[];renderRecords()}};
+ window.g3DeleteRecord=async function(r){
+   try{requireLogin();if(!confirm('Excluir definitivamente o orçamento de '+(r.fields?.cliente||'cliente')+'? A exclusão será sincronizada nos três celulares.'))return;
+   await db.ref('oficinas/'+user.uid+'/orcamentos/'+r.id).remove();
+   if(currentId===r.id){currentId=null;document.getElementById('new').click()}
+   inform('Orçamento excluído em todos os aparelhos.');}catch(e){inform('Erro ao excluir: '+e.message)}
+ };
+ // Backup sempre a partir dos registros atualmente sincronizados.
+ backupRecords=async function(){requireLogin();const payload={app:'Mecanica G3 - Orcamentos',formatVersion:1,exportedAt:new Date().toISOString(),records};const blob=new Blob([JSON.stringify(payload)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='backup_mecanica_g3_'+new Date().toISOString().slice(0,10)+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),60000);inform('Backup dos registros sincronizados gerado.')};
+ restoreRecords=async function(file){requireLogin();const data=JSON.parse(await file.text());if(data.app!=='Mecanica G3 - Orcamentos'||data.formatVersion!==1||!Array.isArray(data.records))throw new Error('Backup inválido.');if(!confirm('Importar '+data.records.length+' registros para a nuvem? Registros com o mesmo ID serão substituídos.'))return;for(const r of data.records){if(!r?.id||!r.fields)throw new Error('Registro inválido no backup.');await db.ref('oficinas/'+user.uid+'/orcamentos/'+r.id).set(r)}inform('Importação concluída: '+data.records.length+' registros.')};
+ document.getElementById('g3Login').onclick=async()=>{try{if(!configured)throw new Error('Configure o Firebase no arquivo HTML antes de entrar.');await auth.signInWithEmailAndPassword(document.getElementById('g3Email').value.trim(),document.getElementById('g3Password').value);document.getElementById('g3Password').value=''}catch(e){inform('Não foi possível entrar: '+e.message)}};
+ document.getElementById('g3Logout').onclick=async()=>{if(auth)await auth.signOut()};
+ document.getElementById('g3ImportLocal').onclick=async()=>{try{requireLogin();const localDB=await openDB();const old=await new Promise((resolve,reject)=>{const req=localDB.transaction('orcamentos').objectStore('orcamentos').getAll();req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});localDB.close();if(!old.length){inform('Não há orçamentos antigos neste navegador.');return}if(!confirm('Enviar '+old.length+' orçamentos antigos para a nuvem? Registros com o mesmo identificador serão substituídos.'))return;for(const r of old)await db.ref('oficinas/'+user.uid+'/orcamentos/'+r.id).set(r);inform(old.length+' orçamentos antigos enviados.')}catch(e){inform('Erro na importação: '+e.message)}};
+ // Não permite consultar dados locais quando desconectado.
+ records=[];renderRecords();
+ document.getElementById('save').disabled=true;
+ if(!configured){inform('Firebase ainda não configurado. Consulte o guia de instalação.');return}
+ try{
+   firebase.initializeApp(G3_FIREBASE_CONFIG);auth=firebase.auth();db=firebase.database();
+   auth.onAuthStateChanged(u=>{
+     if(unsubscribe){unsubscribe();unsubscribe=null}
+     user=u;records=[];renderRecords();document.getElementById('save').disabled=!u;
+     if(!u){inform('Entre para acessar os orçamentos compartilhados.');return}
+     inform('Conectado. Carregando dados da oficina...');
+     const ref=db.ref('oficinas/'+u.uid+'/orcamentos');
+     const cb=snap=>{records=Object.values(snap.val()||{}).sort((a,b)=>String(b.id).localeCompare(String(a.id)));renderRecords();status.textContent='Conectado e sincronizado: '+records.length+' orçamento(s).'};
+     const err=e=>inform('Falha de sincronização: '+e.message);
+     ref.on('value',cb,err);unsubscribe=()=>ref.off('value',cb);
+   });
+ }catch(e){inform('Falha na configuração do Firebase: '+e.message)}
+})();
+</script>
+</body></html>
