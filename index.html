@@ -140,11 +140,25 @@ body.light-mode #savedList,body.light-mode .saved strong{color:#172b49}
 body.light-mode #modoVisual{background:#fff;color:#1744b5;border-color:#dbe6f8}
 @media(max-width:560px){header{margin:8px 8px 0}.card{padding:14px}}
 }
+
+/* Ajuste apenas da tela: o PDF e a impressão permanecem inalterados. */
+@media screen {
+ header .header-info p, header .pix-header span {display:none!important}
+ header .pix-header {max-width:none}
+ #g3CloudPanel.g3-connected {padding:12px 16px;border-top-width:3px}
+ #g3CloudPanel.g3-connected h2 {display:none}
+ #g3CloudPanel.g3-connected #g3CloudStatus {margin:0;color:#55edbc;font-weight:650}
+ #g3CloudPanel.g3-connected:not(.g3-expanded) .grid,
+ #g3CloudPanel.g3-connected:not(.g3-expanded) .actions,
+ #g3CloudPanel.g3-connected:not(.g3-expanded) > p.small:not(#g3CloudStatus) {display:none!important}
+ #g3CloudPanel.g3-connected #g3ManageAccount {display:inline-block!important;margin-top:8px;padding:6px 10px;font-size:12px;background:#26364e;box-shadow:none}
+ body.light-mode #g3CloudPanel.g3-connected #g3CloudStatus {color:#087f5d}
+}
 </style><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script></head>
 <body>
 <header><div class="header-layout"><div class="header-info"><h1>Mecânica G3</h1><button type="button" id="modoVisual" class="no-print" aria-label="Alternar modo claro e escuro">☀ Modo claro</button><p>Rua Luiz Ramos Palma, 21 · Cotia – SP</p><p>CNPJ: 32.334.677/0001-52</p><p>Telefone / WhatsApp: (11) 96905-8242</p><p>PIX (celular): 11969058242</p><p>Orçamento · Diagnóstico técnico · Registro de imagens</p></div><div class="pix-header"><img alt="QR Code PIX da Mecânica G3" src="data:image/png;base64,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"><span><strong>Pague por PIX</strong><br>Recebedor: Michel da Silva Santos<br>Leia o QR Code com o aplicativo do seu banco.<br>Chave PIX (celular): (11) 96905-8242</span></div></div></header>
 <main>
-<section class="card no-print" id="g3CloudPanel"><h2>Sincronização dos três celulares</h2><p class="small" id="g3CloudStatus">Aguardando configuração do Firebase.</p><div class="grid"><div><label>E-mail da oficina</label><input id="g3Email" type="email" autocomplete="username" placeholder="email@exemplo.com"></div><div><label>Senha</label><input id="g3Password" type="password" autocomplete="current-password" placeholder="Senha da conta"></div></div><div class="actions"><button id="g3Login" type="button">Entrar e sincronizar</button><button id="g3Logout" type="button" class="secondary">Sair</button><button id="g3ImportLocal" type="button" class="secondary">Enviar orçamentos antigos deste aparelho</button></div><p class="small">Os dados compartilhados ficam na nuvem. Use a mesma conta nos três aparelhos. A importação de registros antigos é opcional e deve ser feita uma vez por aparelho, depois de conferir os dados.</p></section>
+<section class="card no-print" id="g3CloudPanel"><h2>Sincronização dos três celulares</h2><p class="small" id="g3CloudStatus">Aguardando configuração do Firebase.</p><button id="g3ManageAccount" type="button" style="display:none" aria-expanded="false">Gerenciar conta</button><div class="grid"><div><label>E-mail da oficina</label><input id="g3Email" type="email" autocomplete="username" placeholder="email@exemplo.com"></div><div><label>Senha</label><input id="g3Password" type="password" autocomplete="current-password" placeholder="Senha da conta"></div></div><div class="actions"><button id="g3Login" type="button">Entrar e sincronizar</button><button id="g3Logout" type="button" class="secondary">Sair</button><button id="g3ImportLocal" type="button" class="secondary">Enviar orçamentos antigos deste aparelho</button></div><p class="small">Os dados compartilhados ficam na nuvem. Use a mesma conta nos três aparelhos. A importação de registros antigos é opcional e deve ser feita uma vez por aparelho, depois de conferir os dados.</p></section>
 <section class="card">
 <h2>1. Cliente e veículo</h2>
 <div class="grid">
@@ -521,6 +535,13 @@ const G3_FIREBASE_CONFIG = {
 };
 (function(){
  const status=document.getElementById('g3CloudStatus');
+ const cloudPanel=document.getElementById('g3CloudPanel');
+ const manageAccount=document.getElementById('g3ManageAccount');
+ manageAccount.addEventListener('click',()=>{
+   const expanded=cloudPanel.classList.toggle('g3-expanded');
+   manageAccount.textContent=expanded?'Fechar opções':'Gerenciar conta';
+   manageAccount.setAttribute('aria-expanded',String(expanded));
+ });
  const configured=Object.values(G3_FIREBASE_CONFIG).every(x=>x&&!x.startsWith('COLE_'));
  let auth=null, db=null, unsubscribe=null, user=null;
  const inform=msg=>{status.textContent=msg;document.getElementById('notice').textContent=msg};
@@ -556,6 +577,10 @@ const G3_FIREBASE_CONFIG = {
    auth.onAuthStateChanged(u=>{
      if(unsubscribe){unsubscribe();unsubscribe=null}
      user=u;records=[];renderRecords();document.getElementById('save').disabled=!u;
+     cloudPanel.classList.toggle('g3-connected',!!u);
+     cloudPanel.classList.remove('g3-expanded');
+     manageAccount.textContent='Gerenciar conta';
+     manageAccount.setAttribute('aria-expanded','false');
      if(!u){inform('Entre para acessar os orçamentos compartilhados.');return}
      inform('Conectado. Carregando dados da oficina...');
      const ref=db.ref('oficinas/'+u.uid+'/orcamentos');
