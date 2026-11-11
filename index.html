@@ -145,6 +145,12 @@ body.light-mode #modoVisual{background:#fff;color:#1744b5;border-color:#dbe6f8}
 @media screen {
  header .header-info p, header .pix-header span {display:none!important}
  header .pix-header {max-width:none}
+ #g3SavedToggle{cursor:pointer;list-style:none;padding:13px 16px;border:1px solid #3b6685;border-radius:12px;background:#152b46;color:#d8f5ff;font-weight:700}
+ #g3SavedToggle::-webkit-details-marker{display:none}
+ #g3SavedToggle::before{content:"▸ ";color:#00c9ff}
+ #g3SavedDetails[open] #g3SavedToggle::before{content:"▾ "}
+ #g3SavedDetails[open] #g3SavedToggle{margin-bottom:14px}
+ body.light-mode #g3SavedToggle{background:#eaf4ff;color:#1744b5;border-color:#b8d4f2}
  #g3CloudPanel.g3-connected {padding:12px 16px;border-top-width:3px}
  #g3CloudPanel.g3-connected h2 {display:none}
  #g3CloudPanel.g3-connected #g3CloudStatus {margin:0;color:#55edbc;font-weight:650}
@@ -228,12 +234,14 @@ body.light-mode #modoVisual{background:#fff;color:#1744b5;border-color:#dbe6f8}
 <p class="small">O botão “Gerar PDF” cria um arquivo PDF para baixar. Se o aplicativo Android bloquear o download, abra a versão web no Chrome.</p>
 </section>
 <section class="card no-print" id="savedCard">
-<h2>7. Pesquisar orçamento pela placa</h2>
+<h2>7. Orçamentos salvos</h2>
+<details id="g3SavedDetails"><summary id="g3SavedToggle">Mostrar orçamentos salvos</summary>
 <div class="grid">
 <div class="full"><label for="searchPlate">Digite a placa do veículo</label><input id="searchPlate" autocomplete="off" placeholder="Ex.: ABC1D23"></div>
 </div>
 <p class="small" id="searchCount">Digite uma placa para localizar os orçamentos correspondentes.</p>
 <div id="savedList" class="small">Nenhum orçamento salvo ainda.</div>
+</details>
 </section>
 <div class="print-only small">Documento gerado pelo aplicativo Orçamento Oficina.</div>
 </main>
@@ -270,10 +278,12 @@ function renderRecords(){
  const query=normalizePlate($('searchPlate').value);
  const matches=records.filter(r=>!query||normalizePlate(r.fields?.placa).includes(query));
  $('searchCount').textContent=query?`${matches.length} orçamento(s) encontrado(s) para a pesquisa.`:`${records.length} orçamento(s) salvo(s). Digite a placa para filtrar.`;
+ if(!$('g3SavedDetails').open)return;
  if(!matches.length){list.textContent=query?'Nenhum orçamento encontrado para essa placa.':'Nenhum orçamento salvo ainda.';return}
  matches.forEach(r=>{const d=document.createElement('div');d.className='saved';const title=document.createElement('div');title.innerHTML=`<strong>${escapeHtml(r.fields.cliente||'Sem nome')} · ${escapeHtml(r.fields.veiculo||'Sem veículo')}</strong>${escapeHtml(r.fields.placa||'Sem placa')} · ${money(r.total)} · ${escapeHtml(r.fields.status||'')}`;const b=document.createElement('button');b.textContent='Abrir';b.onclick=()=>{apply(r);window.scrollTo({top:0,behavior:'smooth'})};const del=document.createElement('button');del.textContent='Excluir';del.className='danger';del.onclick=()=>window.g3DeleteRecord?.(r);d.append(title,b,del);list.append(d)})
 }
 $('searchPlate').addEventListener('input',renderRecords);
+$('g3SavedDetails').addEventListener('toggle',()=>{ $('g3SavedToggle').textContent=$('g3SavedDetails').open?'Ocultar orçamentos salvos':'Mostrar orçamentos salvos';renderRecords(); });
 async function loadRecords(){try{const db=await openDB();records=await new Promise((res,rej)=>{const q=db.transaction('orcamentos').objectStore('orcamentos').getAll();q.onsuccess=()=>res(q.result.sort((a,b)=>b.id.localeCompare(a.id)));q.onerror=()=>rej(q.error)});renderRecords()}catch(e){$('savedList').textContent='Não foi possível acessar o armazenamento deste navegador.'}}
 $('save').onclick=()=>saveRecord().catch(e=>$('notice').textContent='Erro ao salvar: '+e.message);
 async function backupRecords(){
