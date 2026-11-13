@@ -40,28 +40,31 @@ button.secondary{background:#e8eff3;color:var(--navy)}button.danger{background:#
 @media print{
  @page{size:A4;margin:14mm 13mm}
  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
- body{background:#fff!important;color:#17232d;font-size:11pt;line-height:1.4}
- header{display:block!important;background:#17324d!important;color:#fff!important;padding:15px 18px!important;margin:0 0 13px;border-radius:0}
+ body{background:#fff!important;color:#171717;font-size:11pt;line-height:1.4}
+ header{display:block!important;background:#fff!important;color:#171717!important;border-bottom:1px solid #555;padding:15px 18px!important;margin:0 0 13px;border-radius:0}
+ .pix-header{color:#171717}
+ .recommendation-box{background:#fff!important;border-color:#ccc!important}
+ .recommendation-photos{border-color:#ccc!important}
  header h1{font-size:21pt;letter-spacing:.2px;margin:0 0 3px}
- header p{color:#e2edf3!important;margin:2px 0;font-size:9pt}
+ header p{color:#333!important;margin:2px 0;font-size:9pt}
  .no-print,#savedCard{display:none!important}
  main{max-width:none;padding:0;margin:0;display:block}
- .card{background:#fff!important;border:0;border-bottom:1.5px solid #9aaab5!important;border-radius:0!important;box-shadow:none!important;padding:12px 2px 14px!important;margin:0 0 8px!important;break-inside:auto;page-break-inside:auto}
+ .card{background:#fff!important;border:0;border-bottom:1.5px solid #aaa!important;border-radius:0!important;box-shadow:none!important;padding:12px 2px 14px!important;margin:0 0 8px!important;break-inside:auto;page-break-inside:auto}
  .card:last-of-type{border-bottom:0!important}
- h2{font-size:12pt;color:#17324d!important;margin:0 0 10px!important;padding:0 0 6px!important;border-bottom:2px solid #176b87!important;letter-spacing:.15px}
+ h2{font-size:12pt;color:#171717!important;margin:0 0 10px!important;padding:0 0 6px!important;border-bottom:2px solid #555!important;letter-spacing:.15px}
  .grid{gap:9px 16px}
- label{font-size:8pt!important;font-weight:700;color:#526575!important;margin:0 0 3px!important;text-transform:uppercase;letter-spacing:.25px}
- input,textarea,select{display:block;width:100%;border:0!important;border-bottom:1px solid #d3dce2!important;border-radius:0!important;background:transparent!important;color:#17232d!important;padding:3px 0 5px!important;font:10pt system-ui,-apple-system,Segoe UI,Roboto,sans-serif!important;min-height:20px;appearance:none}
+ label{font-size:8pt!important;font-weight:700;color:#444!important;margin:0 0 3px!important;text-transform:uppercase;letter-spacing:.25px}
+ input,textarea,select{display:block;width:100%;border:0!important;border-bottom:1px solid #ccc!important;border-radius:0!important;background:transparent!important;color:#171717!important;padding:3px 0 5px!important;font:10pt system-ui,-apple-system,Segoe UI,Roboto,sans-serif!important;min-height:20px;appearance:none}
  textarea{min-height:38px;resize:none;white-space:pre-wrap}
- .item{grid-template-columns:1fr 115px;gap:12px;margin:7px 0;padding:0 0 6px;border-bottom:1px dotted #c4cfd6;break-inside:avoid}
+ .item{grid-template-columns:1fr 115px;gap:12px;margin:7px 0;padding:0 0 6px;border-bottom:1px dotted #ccc;break-inside:avoid}
  .item .desc,.item .value{font-size:10pt!important}
- .total{font-size:19pt;font-weight:800;color:#17324d!important;border-top:2px solid #17324d;padding-top:8px;margin-top:7px}
+ .total{font-size:19pt;font-weight:800;color:#171717!important;border-top:2px solid #171717;padding-top:8px;margin-top:7px}
  .photo-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
- .photo{border:1px solid #cbd6dd!important;border-radius:6px;padding:7px;break-inside:avoid}
+ .photo{border:1px solid #ccc!important;border-radius:6px;padding:7px;break-inside:avoid}
  .photo img{height:115px;object-fit:contain}
  .photo label{margin-top:5px!important}
- .small{font-size:8pt;color:#526575!important}
- .print-only{display:block!important;margin-top:10px;padding-top:7px;border-top:1px solid #cbd6dd;color:#526575!important}
+ .small{font-size:8pt;color:#444!important}
+ .print-only{display:block!important;margin-top:10px;padding-top:7px;border-top:1px solid #ccc;color:#444!important}
 }
 .print-only{display:none}
 .recommendation-box{border:1px solid #b8cfdf;border-radius:10px;padding:12px;background:#f6fbff}.recommendation-photos{margin-top:12px;padding-top:12px;border-top:1px solid #c8dce8}
@@ -396,14 +399,11 @@ async function gerarPDF(compartilhar=false,tipo="orcamento"){
   calc();
   const r=collect(),f=r.fields,doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
   const W=210,M=15,maxW=W-2*M;let y=44;
-  const ink=[232,241,255],muted=[170,190,216],cyan=[0,207,255],purple=[157,112,255],green=[42,234,169];
+  const ink=[20,20,20],muted=[70,70,70],border=[170,170,170];
   const rgb=c=>doc.setTextColor(...c);
   const pageBase=()=>{
-   doc.setFillColor(11,17,31);doc.rect(0,0,210,297,'F');
-   doc.setFillColor(17,27,47);doc.rect(0,0,210,40,'F');
-   doc.setFillColor(...cyan);doc.rect(0,39,112,1.1,'F');
-   doc.setFillColor(...purple);doc.rect(112,39,98,1.1,'F');
-   doc.setDrawColor(48,67,95);doc.line(15,287,195,287);
+   doc.setLineWidth(.25);
+   doc.setDrawColor(...border);doc.line(M,287,W-M,287);
    rgb(muted);doc.setFont('helvetica','normal');doc.setFontSize(7);
    doc.text('MECÂNICA G3  |  DOCUMENTO DIGITAL',15,292);
    doc.text('Página '+doc.internal.getNumberOfPages(),195,292,{align:'right'});
@@ -411,7 +411,7 @@ async function gerarPDF(compartilhar=false,tipo="orcamento"){
   pageBase();
   // Nas páginas seguintes, usar apenas uma faixa compacta de identificação.
   const next=(h=7)=>{if(y+h>281){doc.addPage();pageBase();
-   rgb(cyan);doc.setFont('helvetica','bold');doc.setFontSize(12);
+   rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(12);
    doc.text('MECÂNICA G3',M,13);
    rgb(muted);doc.setFontSize(8);doc.text(tipo==='fatura'?'FATURA':'ORÇAMENTO',W-M,13,{align:'right'});
    y=21;rgb(ink);
@@ -423,8 +423,8 @@ async function gerarPDF(compartilhar=false,tipo="orcamento"){
    const lines=doc.splitTextToSize(String(value),maxW-8);
    const h=8+Math.max(1,lines.length)*4.3;
    next(h+1);
-   doc.setFillColor(19,30,51);doc.roundedRect(M,y,maxW,h,2,2,'F');
-   rgb(cyan);doc.setFont('helvetica','bold');doc.setFontSize(8);
+   doc.setDrawColor(...border);doc.setLineWidth(.18);doc.line(M,y+h,W-M,y+h);
+   rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(8);
    doc.text(label.toUpperCase(),M+3,y+4);
    rgb(ink);doc.setFont('helvetica','normal');doc.setFontSize(9);
    lines.forEach((t,i)=>doc.text(t,M+3,y+9+i*4.3));
@@ -432,30 +432,28 @@ async function gerarPDF(compartilhar=false,tipo="orcamento"){
   };
   const section=t=>{
    next(16);y+=2;
-   doc.setFillColor(25,39,66);doc.roundedRect(M,y,maxW,10,2,2,'F');
-   doc.setFillColor(...purple);doc.rect(M,y,2,10,'F');
+   doc.setDrawColor(...border);doc.setLineWidth(.3);doc.line(M,y+9,W-M,y+9);
    rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(10);
    doc.text(t,M+5,y+6.7);y+=13;
   };
   // Cabeçalho comum aos dois documentos. A conversão evita falhas com PNG no jsPDF.
-  doc.setFillColor(17,27,47);doc.rect(0,0,W,39,'F');
-  rgb(cyan);doc.setFont('helvetica','bold');doc.setFontSize(17);
+  doc.setDrawColor(...border);doc.line(M,40,W-M,40);
+  rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(17);
   doc.text('MECÂNICA G3',M,10);
   rgb(ink);doc.setFont('helvetica','normal');doc.setFontSize(7.4);
   doc.text('Rua Luiz Ramos Palma, 21 - Cotia - SP',M,15);
   doc.text('CNPJ: 32.334.677/0001-52',M,19);
   doc.text('Telefone / WhatsApp: (11) 96905-8242',M,23);
   doc.text('PIX (celular): 11969058242',M,27);
-  rgb(green);doc.setFont('helvetica','bold');doc.setFontSize(8.2);
+  rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(8.2);
   doc.text(tipo==='fatura'?'FATURA':'ORÇAMENTO',M,32);
   rgb(muted);doc.setFont('helvetica','normal');doc.setFontSize(6.7);
   doc.text('Diagnóstico técnico - Registro de imagens',M,36);
   const qrSrc=document.querySelector('.pix-header img')?.src;
   if(!qrSrc)throw new Error('QR Code PIX não encontrado no aplicativo.');
   const qr=await imagemParaJpeg(qrSrc);
-  doc.setFillColor(255,255,255);doc.roundedRect(122,5,29,29,2,2,'F');
   doc.addImage(qr.data,'JPEG',124,7,25,25);
-  doc.setFont('helvetica','bold');doc.setFontSize(8.1);doc.setTextColor(255,255,255);
+  doc.setFont('helvetica','bold');doc.setFontSize(8.1);rgb(ink);
   doc.text('PAGUE POR PIX',155,9);
   doc.setFont('helvetica','normal');doc.setFontSize(6.5);
   doc.text('Recebedor:',155,14);
@@ -487,13 +485,11 @@ async function gerarPDF(compartilhar=false,tipo="orcamento"){
     const top=y;
     prepared.slice(i,i+2).forEach((v,j)=>{
      const x=M+j*92;
-     doc.setFillColor(19,30,51);doc.setDrawColor(...cyan);
-     doc.setLineWidth(.3);doc.roundedRect(x,top,88,boxH,2,2,'FD');
-     doc.setFillColor(255,255,255);doc.roundedRect(x+3,top+3,82,photoH,1,1,'F');
+     doc.setDrawColor(...border);doc.setLineWidth(.25);doc.roundedRect(x,top,88,boxH,2,2,'S');
      const scale=Math.min(82/v.im.width,photoH/v.im.height);
      const iw=v.im.width*scale,ih=v.im.height*scale;
      doc.addImage(v.im.data,'JPEG',x+(88-iw)/2,top+3+(photoH-ih)/2,iw,ih);
-     doc.setDrawColor(60,85,122);doc.line(x+3,top+40,x+85,top+40);
+     doc.setDrawColor(...border);doc.line(x+3,top+40,x+85,top+40);
      rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(7.5);
      const caption=doc.splitTextToSize(v.ph.caption||v.ph.name||('Foto '+(i+j+1)),80).slice(0,2);
      caption.forEach((t,k)=>doc.text(t,x+4,top+44+k*3.5));
@@ -513,13 +509,13 @@ async function gerarPDF(compartilhar=false,tipo="orcamento"){
    rgb(ink);doc.setFont('helvetica','normal');doc.setFontSize(10);
    for(let i=0;i<desc.length;i++){
     next(5);doc.text(desc[i],M,y);
-    if(i===0){rgb(green);doc.text('R$ '+(Number(it.value)||0).toFixed(2).replace('.',','),W-M,y,{align:'right'});rgb(ink)}
+    if(i===0){rgb(ink);doc.text('R$ '+(Number(it.value)||0).toFixed(2).replace('.',','),W-M,y,{align:'right'});rgb(ink)}
     y+=5;
    }y+=1;
   }
   line('Desconto (R$)',f.desconto);next(19);
-  doc.setFillColor(17,56,54);doc.roundedRect(M,y-6,maxW,17,3,3,'F');
-  rgb(green);doc.setFont('helvetica','bold');doc.setFontSize(15);
+  doc.setDrawColor(...border);doc.setLineWidth(.35);doc.roundedRect(M,y-6,maxW,17,3,3,'S');
+  rgb(ink);doc.setFont('helvetica','bold');doc.setFontSize(15);
   doc.text('TOTAL: '+money(r.total).replace(/\u00a0/g,' '),M+5,y+5);y+=19;
   await imageGroup('FOTOS APÓS O SERVIÇO EXECUTADO',r.photos);
   section('Condições');
