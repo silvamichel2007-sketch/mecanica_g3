@@ -160,10 +160,48 @@ body.light-mode #modoVisual{background:#fff;color:#1744b5;border-color:#dbe6f8}
  #g3CloudPanel.g3-connected #g3ManageAccount {display:inline-block!important;margin-top:8px;padding:6px 10px;font-size:12px;background:#26364e;box-shadow:none}
  body.light-mode #g3CloudPanel.g3-connected #g3CloudStatus {color:#087f5d}
 }
+@media screen {
+ #attachArrivalPhotos{width:100%;text-align:left;font-size:16px}
+ #attachArrivalPhotos::after{content:"+";float:right}
+ #attachArrivalPhotos[aria-expanded="true"]::after{content:"−"}
+}
 </style><script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script><script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script></head>
 <body>
 <header><div class="header-layout"><div class="header-info"><h1>Mecânica G3</h1><button type="button" id="modoVisual" class="no-print" aria-label="Alternar modo claro e escuro">☀ Modo claro</button><p>Rua Luiz Ramos Palma, 21 · Cotia – SP</p><p>CNPJ: 32.334.677/0001-52</p><p>Telefone / WhatsApp: (11) 96905-8242</p><p>PIX (celular): 11969058242</p><p>Orçamento · Diagnóstico técnico · Registro de imagens</p></div><div class="pix-header"><img alt="QR Code PIX da Mecânica G3" src="data:image/png;base64,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"><span><strong>Pague por PIX</strong><br>Recebedor: Michel da Silva Santos<br>Leia o QR Code com o aplicativo do seu banco.<br>Chave PIX (celular): (11) 96905-8242</span></div></div></header>
 <main>
+<section class="card no-print" aria-label="Checklist de chegada do veículo">
+<button type="button" id="attachArrivalPhotos" aria-expanded="false" aria-controls="arrivalPanel">Checklist de chegada</button>
+<div id="arrivalPanel" hidden>
+<p class="small">Registre as condições do veículo na entrada. Uso interno da oficina.</p>
+<div class="grid">
+<div>
+<label for="arrivalArea">Parte do veículo</label>
+<select id="arrivalArea">
+<option value="frente">Frente</option>
+<option value="traseira">Traseira</option>
+<option value="esquerda">Lateral esquerda</option>
+<option value="direita">Lateral direita</option>
+<option value="interior">Interior</option>
+<option value="painel">Painel e quilometragem</option>
+<option value="avaria">Avarias e outros detalhes</option>
+</select>
+</div>
+</div>
+<div class="actions">
+<button type="button" id="takeArrivalPhoto">Tirar foto</button>
+<button type="button" id="chooseArrivalPhotos" class="secondary">Escolher da galeria</button>
+</div>
+<input id="arrivalCamera" type="file" accept="image/*" capture="environment" hidden>
+<input id="arrivalGallery" type="file" accept="image/*" multiple hidden>
+<p class="small" id="arrivalPhotoStatus" role="status" hidden></p>
+<p class="small" id="arrivalSummary" aria-live="polite"></p>
+<div id="arrivalGrid" class="photo-grid"></div>
+<div style="margin-top:12px">
+<label for="arrivalNotes">Observações da chegada</label>
+<textarea id="arrivalNotes" placeholder="Ex.: risco no para-choque traseiro e amassado na porta esquerda"></textarea>
+</div>
+</div>
+</section>
 <section class="card no-print" id="g3CloudPanel"><h2>Sincronização dos três celulares</h2><p class="small" id="g3CloudStatus">Aguardando configuração do Firebase.</p><button id="g3ManageAccount" type="button" style="display:none" aria-expanded="false">Gerenciar conta</button><div class="grid"><div><label>E-mail da oficina</label><input id="g3Email" type="email" autocomplete="username" placeholder="email@exemplo.com"></div><div><label>Senha</label><input id="g3Password" type="password" autocomplete="current-password" placeholder="Senha da conta"></div></div><div class="actions"><button id="g3Login" type="button">Entrar e sincronizar</button><button id="g3Logout" type="button" class="secondary">Sair</button><button id="g3ImportLocal" type="button" class="secondary">Enviar orçamentos antigos deste aparelho</button></div><p class="small">Os dados compartilhados ficam na nuvem. Use a mesma conta nos três aparelhos. A importação de registros antigos é opcional e deve ser feita uma vez por aparelho, depois de conferir os dados.</p></section>
 <section class="card">
 <h2>1. Cliente e veículo</h2>
@@ -174,7 +212,8 @@ body.light-mode #modoVisual{background:#fff;color:#1744b5;border-color:#dbe6f8}
 <div><label>Ano</label><input id="ano" placeholder="2013"></div>
 <div><label>Placa</label><input id="placa" placeholder="ABC1D23"></div>
 <div><label>Quilometragem</label><input id="km" placeholder="Ex.: 125.000 km"></div>
-</div></section>
+</div>
+</section>
 <section class="card">
 <h2>2. Diagnóstico e observações</h2>
 <div class="grid">
@@ -248,7 +287,7 @@ body.light-mode #modoVisual{background:#fff;color:#1744b5;border-color:#dbe6f8}
 <script>
 (function(){const b=document.getElementById('modoVisual');b.addEventListener('click',()=>{document.body.classList.toggle('light-mode');b.textContent=document.body.classList.contains('light-mode')?'☾ Modo black':'☀ Modo claro';});})();
 const $=id=>document.getElementById(id);
-let photos=[], defectPhotos=[], currentId=null, records=[];
+let photos=[], defectPhotos=[], arrivalPhotos=[], currentId=null, records=[];
 const money=n=>(Number(n)||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
 function addItem(desc='',val=''){
  const row=document.createElement('div');row.className='item';
@@ -264,12 +303,34 @@ $('desconto').oninput=calc;
 async function addPhotos(e,group){for(const file of e.target.files){if(!file.type.startsWith('image/'))continue;const data=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result);r.onerror=rej;r.readAsDataURL(file)});group.push({name:file.name,caption:file.name,data});}renderPhotos();e.target.value=''}
 $('fotos').onchange=e=>addPhotos(e,photos);
 $('fotosDefeito').onchange=e=>addPhotos(e,defectPhotos);
-function renderPhotoGroup(gridId,group){const g=$(gridId);g.innerHTML='';group.forEach((ph,i)=>{const d=document.createElement('div');d.className='photo';d.innerHTML=`<img src="${ph.data}" alt=""><label>Legenda</label><input value="${escapeHtml(ph.caption)}" data-i="${i}"><button class="danger no-print" data-del="${i}" style="margin-top:5px">Remover</button>`;g.appendChild(d)});g.querySelectorAll('input').forEach(e=>e.oninput=()=>group[Number(e.dataset.i)].caption=e.value);g.querySelectorAll('button').forEach(e=>e.onclick=()=>{group.splice(Number(e.dataset.del),1);renderPhotos()})}
-function renderPhotos(){renderPhotoGroup('photoGrid',photos);renderPhotoGroup('defectGrid',defectPhotos)}
+function showArrivalPanel(open){
+ $('arrivalPanel').hidden=!open;
+ $('attachArrivalPhotos').setAttribute('aria-expanded',String(open));
+}
+$('attachArrivalPhotos').onclick=()=>showArrivalPanel($('arrivalPanel').hidden);
+$('takeArrivalPhoto').onclick=()=>$('arrivalCamera').click();
+$('chooseArrivalPhotos').onclick=()=>$('arrivalGallery').click();
+const arrivalAreas=Object.fromEntries(Array.from($('arrivalArea').options,option=>[option.value,option.textContent]));
+function renderPhotoGroup(gridId,group){const g=$(gridId);g.innerHTML='';group.forEach((ph,i)=>{const d=document.createElement('div');d.className='photo';d.innerHTML=`<img src="${escapeHtml(ph.data)}" alt="">${gridId==='arrivalGrid'?'<strong>'+escapeHtml(arrivalAreas[ph.area]||'Foto da chegada')+'</strong>':''}<label>Legenda</label><input value="${escapeHtml(ph.caption)}" data-i="${i}"><button class="danger no-print" data-del="${i}" style="margin-top:5px">Remover</button>`;g.appendChild(d)});g.querySelectorAll('input').forEach(e=>e.oninput=()=>group[Number(e.dataset.i)].caption=e.value);g.querySelectorAll('button').forEach(e=>e.onclick=()=>{group.splice(Number(e.dataset.del),1);renderPhotos()})}
+function renderPhotos(){
+ renderPhotoGroup('photoGrid',photos);
+ renderPhotoGroup('defectGrid',defectPhotos);
+ renderPhotoGroup('arrivalGrid',arrivalPhotos);
+ const photographed=Object.keys(arrivalAreas).filter(area=>arrivalPhotos.some(photo=>photo.area===area));
+ const count=arrivalPhotos.length;
+ const countText=count===1?'1 foto anexada':count+' fotos anexadas';
+ $('arrivalSummary').textContent=photographed.length?countText+' · '+photographed.map(area=>arrivalAreas[area]).join(', '):countText;
+}
+function setArrivalPhotoStatus(text=''){
+ const status=$('arrivalPhotoStatus');
+ status.textContent=text;
+ status.hidden=!text;
+}
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 const fields=['cliente','telefone','veiculo','ano','placa','km','relato','diagnostico','recomendacao','desconto','validade','status','garantia'];
-function collect(){return {id:currentId||String(Date.now()),date:new Date().toLocaleString('pt-BR'),fields:Object.fromEntries(fields.map(f=>[f,$(f).value])),items:[...document.querySelectorAll('.item')].map(r=>({desc:r.querySelector('.desc').value,value:r.querySelector('.value').value})),photos,defectPhotos,total:calc()}}
-function apply(r){currentId=r.id;fields.forEach(f=>$(f).value=r.fields[f]||'');$('items').innerHTML='';(r.items||[]).forEach(i=>addItem(i.desc,i.value));photos=r.photos||[];defectPhotos=r.defectPhotos||[];renderPhotos();calc();$('notice').textContent='Orçamento carregado.'}
+function collect(){return {id:currentId||String(Date.now()),date:new Date().toLocaleString('pt-BR'),fields:Object.fromEntries(fields.map(f=>[f,$(f).value])),items:[...document.querySelectorAll('.item')].map(r=>({desc:r.querySelector('.desc').value,value:r.querySelector('.value').value})),photos,defectPhotos,arrivalPhotos,arrivalNotes:$('arrivalNotes').value,total:calc()}}
+function apply(r){currentId=r.id;fields.forEach(f=>$(f).value=r.fields[f]||'');$('items').innerHTML='';(r.items||[]).forEach(i=>addItem(i.desc,i.value));photos=r.photos||[];defectPhotos=r.defectPhotos||[];arrivalPhotos=Array.isArray(r.arrivalPhotos)?r.arrivalPhotos.map(photo=>({...photo})):[];$('arrivalNotes').value=typeof r.arrivalNotes==='string'?r.arrivalNotes:'';
+ $('arrivalArea').selectedIndex=0;showArrivalPanel(arrivalPhotos.length>0||Boolean($('arrivalNotes').value));setArrivalPhotoStatus();renderPhotos();calc();$('notice').textContent='Orçamento carregado.'}
 function openDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open('OrcamentoOficinaDB',1);req.onupgradeneeded=()=>req.result.createObjectStore('orcamentos',{keyPath:'id'});req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 async function saveRecord(){const r=collect();const db=await openDB();await new Promise((res,rej)=>{const tx=db.transaction('orcamentos','readwrite');tx.objectStore('orcamentos').put(r);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});currentId=r.id;$('notice').textContent='Orçamento salvo neste aparelho.';await loadRecords()}
 function normalizePlate(value){return String(value||'').toUpperCase().replace(/[^A-Z0-9]/g,'')}
@@ -483,8 +544,8 @@ async function gerarPDF(compartilhar=false,tipo="orcamento"){
 $('sharePdf').onclick=()=>gerarPDF(true);
 
 $('shareInvoice').onclick=()=>gerarPDF(true,'fatura');
-$('new').onclick=()=>{if(!confirm('Começar um orçamento novo? Salve antes se precisar manter o atual.'))return;fields.forEach(f=>$(f).value=f==='desconto'?'0':f==='status'?'Pendente':'');$('items').innerHTML='';photos=[];defectPhotos=[];renderPhotos();currentId=null;addItem();$('notice').textContent='Novo orçamento.'};
-addItem();loadRecords();
+$('new').onclick=()=>{if(!confirm('Começar um orçamento novo? Salve antes se precisar manter o atual.'))return;fields.forEach(f=>$(f).value=f==='desconto'?'0':f==='status'?'Pendente':'');$('items').innerHTML='';photos=[];defectPhotos=[];arrivalPhotos=[];$('arrivalNotes').value='';$('arrivalArea').selectedIndex=0;showArrivalPanel(false);setArrivalPhotoStatus();renderPhotos();currentId=null;addItem();$('notice').textContent='Novo orçamento.'};
+addItem();renderPhotos();loadRecords();
 if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn))}
 </script>
 <script>
@@ -613,29 +674,94 @@ const G3_FIREBASE_CONFIG = {
  async function draftPut(value){const db=await draftDB();try{await new Promise((resolve,reject)=>{const tx=db.transaction(DRAFT_STORE,'readwrite');tx.objectStore(DRAFT_STORE).put(value,DRAFT_KEY);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error)})}finally{db.close()}}
  async function draftGet(){const db=await draftDB();try{return await new Promise((resolve,reject)=>{const q=db.transaction(DRAFT_STORE).objectStore(DRAFT_STORE).get(DRAFT_KEY);q.onsuccess=()=>resolve(q.result);q.onerror=()=>reject(q.error)})}finally{db.close()}}
  async function draftClear(){const db=await draftDB();try{await new Promise((resolve,reject)=>{const tx=db.transaction(DRAFT_STORE,'readwrite');tx.objectStore(DRAFT_STORE).delete(DRAFT_KEY);tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}finally{db.close()}}
- function meaningful(r){return fields.some(f=>!['desconto','status'].includes(f)&&r.fields[f])||r.items.some(i=>i.desc||Number(i.value))||r.photos.length||r.defectPhotos.length||r.centroCustos?.notas||r.centroCustos?.itens?.some(x=>Number(x))||['pecas','maoObra','outras'].some(k=>Number(r.centroCustos?.[k]))}
- async function persist(){if(restoring||saving)return;try{const r=collect();if(!meaningful(r))return;await draftPut({record:r,updatedAt:new Date().toISOString()});dirty=true;message('Rascunho salvo automaticamente neste aparelho. Ainda não sincronizado.')}catch(e){message('Atenção: não foi possível guardar o rascunho: '+e.message)}}
+ function meaningful(r){return fields.some(f=>!['desconto','status'].includes(f)&&r.fields[f])||r.items.some(i=>i.desc||Number(i.value))||r.photos.length||r.defectPhotos.length||r.arrivalPhotos?.length||r.arrivalNotes?.trim()||r.centroCustos?.notas||r.centroCustos?.itens?.some(x=>Number(x))||['pecas','maoObra','outras'].some(k=>Number(r.centroCustos?.[k]))}
+ async function persist(){if(restoring||saving)return;try{const r=collect();if(!meaningful(r)){if(dirty)await draftClear();message('Rascunho automático ativado neste aparelho.');return}await draftPut({record:r,updatedAt:new Date().toISOString()});dirty=true;message('Rascunho salvo automaticamente neste aparelho. Ainda não sincronizado.')}catch(e){message('Atenção: não foi possível guardar o rascunho: '+e.message)}}
  function schedule(){if(restoring||saving)return;dirty=true;message('Guardando rascunho...');clearTimeout(timer);timer=setTimeout(persist,650)}
  function imgLoad(src){return new Promise((resolve,reject)=>{const im=new Image();im.onload=()=>resolve(im);im.onerror=()=>reject(new Error('Imagem não pôde ser aberta.'));im.src=src})}
  function encode(im,maxSide,quality){const c=document.createElement('canvas');const factor=Math.min(1,maxSide/Math.max(im.naturalWidth,im.naturalHeight));c.width=Math.max(1,Math.round(im.naturalWidth*factor));c.height=Math.max(1,Math.round(im.naturalHeight*factor));const ctx=c.getContext('2d');if(!ctx)throw new Error('Compressão de fotos indisponível.');ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);ctx.drawImage(im,0,0,c.width,c.height);return c.toDataURL('image/jpeg',quality)}
  async function compactOne(ph,maxSide=1600,quality=.78){if(!ph?.data)return;const im=await imgLoad(ph.data);const result=encode(im,maxSide,quality);if(result.length<ph.data.length)ph.data=result}
- async function compressAll(){const all=[...defectPhotos,...photos];for(const ph of all)await compactOne(ph);let r=collect();let size=new Blob([JSON.stringify(r)]).size;if(size<=TARGET)return;
+ async function compressAll(){const all=[...defectPhotos,...photos,...arrivalPhotos];for(const ph of all)await compactOne(ph);let r=collect();let size=new Blob([JSON.stringify(r)]).size;if(size<=TARGET)return;
   for(const [side,quality] of [[1400,.68],[1100,.58],[850,.48],[650,.4]]){for(const ph of all)await compactOne(ph,side,quality);r=collect();size=new Blob([JSON.stringify(r)]).size;if(size<=TARGET)return}
   if(size>LIMIT)throw new Error('Mesmo após a compressão, as fotos ultrapassam 8 MB. Remova algumas fotos ou divida o serviço em dois orçamentos.');
  }
- const oldAddPhotos=addPhotos;
- addPhotos=async function(e,group){const input=e.target;try{const list=Array.from(input.files||[]);for(const file of list){if(!file.type.startsWith('image/'))continue;const data=await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.onerror=()=>rej(fr.error);fr.readAsDataURL(file)});const ph={name:file.name,caption:file.name,data};await compactOne(ph);group.push(ph);renderPhotos();await persist()}message('Fotografias adicionadas e rascunho atualizado.')}catch(err){message('Erro na fotografia: '+err.message)}finally{input.value=''}};
+ addPhotos=async function(e,group,area){
+  const input=e.target;
+  const isArrival=group===arrivalPhotos;
+  let added=0;
+  try{
+   for(const file of Array.from(input.files||[])){
+    if(file.type&&!file.type.startsWith('image/'))throw new Error('Escolha um arquivo de imagem.');
+    const data=await new Promise((resolve,reject)=>{
+     const reader=new FileReader();
+     reader.onload=()=>resolve(reader.result);
+     reader.onerror=()=>reject(reader.error);
+     reader.readAsDataURL(file);
+    });
+    const ph={name:file.name,caption:isArrival?'':file.name,data};
+    if(isArrival)ph.area=area;
+    await compactOne(ph);
+    if(group!==arrivalPhotos&&group!==photos&&group!==defectPhotos)return;
+    group.push(ph);
+    added++;
+    renderPhotos();
+    await persist();
+   }
+   if(isArrival&&group===arrivalPhotos)setArrivalPhotoStatus(added===1?'Foto adicionada.':added+' fotos adicionadas.');
+  }catch(err){
+   const text='Erro na fotografia: '+err.message;
+   if(isArrival&&group===arrivalPhotos)setArrivalPhotoStatus(text);
+   message(text);
+  }finally{input.value=''}
+ };
+ let arrivalImport=null;
+ const arrivalButtons=[$('takeArrivalPhoto'),$('chooseArrivalPhotos')];
+ async function importArrivalPhotos(event){
+  if(!event.target.files?.length)return;
+  arrivalButtons.forEach(button=>button.disabled=true);
+  setArrivalPhotoStatus('Preparando fotos...');
+  arrivalImport=addPhotos(event,arrivalPhotos,$('arrivalArea').value);
+  try{await arrivalImport}finally{
+   arrivalImport=null;
+   arrivalButtons.forEach(button=>button.disabled=saving);
+  }
+ }
+ $('arrivalCamera').onchange=importArrivalPhotos;
+ $('arrivalGallery').onchange=importArrivalPhotos;
  const originalRenderPhotos=renderPhotos;
  renderPhotos=function(){originalRenderPhotos();schedule()};
  const originalApply=apply;
  apply=function(r){restoring=true;try{originalApply(r);dirty=false;savedSnapshot=JSON.stringify(collect());message('Orçamento aberto. Alterações serão guardadas em rascunho.')}finally{restoring=false}};
  const originalSave=saveRecord;
- saveRecord=async function(){clearTimeout(timer);saving=true;try{message('Compactando fotos e sincronizando...');await compressAll();const result=await originalSave();dirty=false;savedSnapshot=JSON.stringify(collect());await draftClear();message('Orçamento sincronizado com Firebase. Rascunho local finalizado.');return result}catch(e){saving=false;await persist();throw e}finally{saving=false}};
+ saveRecord=async function(){
+  const group=arrivalPhotos;
+  await arrivalImport;
+  if(group!==arrivalPhotos||saving)return;
+  clearTimeout(timer);
+  saving=true;
+  arrivalButtons.forEach(button=>button.disabled=true);
+  try{
+   message('Compactando fotos e sincronizando...');
+   await compressAll();
+   const result=await originalSave();
+   dirty=false;
+   savedSnapshot=JSON.stringify(collect());
+   await draftClear();
+   message('Orçamento sincronizado com Firebase. Rascunho local finalizado.');
+   return result;
+  }catch(e){
+   saving=false;
+   await persist();
+   throw e;
+  }finally{
+   saving=false;
+   arrivalButtons.forEach(button=>button.disabled=false);
+  }
+ };
  const newBtn=document.getElementById('new'), oldNew=newBtn.onclick;
  newBtn.onclick=async function(ev){clearTimeout(timer);if(dirty||meaningful(collect())){if(!confirm('O orçamento atual pode conter alterações não sincronizadas. Iniciar outro orçamento? O rascunho atual será apagado deste aparelho.'))return;}
   // O botão original pede sua própria confirmação e limpa o centro de custos.
   const before=JSON.stringify(collect());oldNew.call(this,ev);if(JSON.stringify(collect())!==before){await draftClear().catch(e=>message('Não foi possível apagar o rascunho: '+e.message));dirty=false;savedSnapshot='';message('Novo orçamento iniciado. O rascunho anterior foi descartado.')}};
- document.querySelector('main').addEventListener('input',e=>{if(e.target.closest('#g3CloudPanel,#savedCard')||e.target.id==='searchPlate')return;schedule()},true);
+ document.querySelector('main').addEventListener('input',e=>{if(e.target.closest('#g3CloudPanel,#savedCard')||e.target.type==='file')return;schedule()},true);
  document.querySelector('main').addEventListener('change',e=>{if(e.target.closest('#g3CloudPanel,#savedCard'))return;if(e.target.type==='file')return;schedule()},true);
  document.getElementById('items').addEventListener('click',()=>setTimeout(schedule,50));
  document.getElementById('addItem').addEventListener('click',()=>setTimeout(schedule,50));
